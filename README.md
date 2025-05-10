@@ -20,7 +20,7 @@ PBT Blank Keycaps | 10 | $9.59
 ## PCB
 The PCB was designed using KiCAD with a focus on simplicity, compactness, and ease of assembly. It includes all the necessary connections for the microcontroller, switches, and diodes, while minimizing overall footprint and cost.
 
-Files Included:
+[Files](https://github.com/MudhHash/3x3-PiPico-Macropad/tree/main/PCB) Included:
 * .kicad_pcb – Main PCB layout
 * .sch – Schematic design
 <p>
@@ -66,3 +66,6 @@ if __name__ == '__main__':
 ```
 
 Feel free to modify the code to suit your own workflow!
+
+## Resources
+* KiCad Footprints: The component footprints used in this project were sourced from [ScottoKeebs](https://github.com/joe-scotto/scottokeebs).
