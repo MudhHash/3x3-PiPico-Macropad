@@ -19,9 +19,50 @@ PBT Blank Keycaps | 10 | $9.59
 
 ## PCB
 The PCB was designed using KiCAD with a focus on simplicity, compactness, and ease of assembly. It includes all the necessary connections for the microcontroller, switches, and diodes, while minimizing overall footprint and cost.
+
 Files Included:
 * .kicad_pcb – Main PCB layout
 * .sch – Schematic design
 <p>
 <img src="https://github.com/user-attachments/assets/6256552b-c434-4c3f-8ffc-dc88d65c02b0" width="50%"/><img src="https://github.com/user-attachments/assets/f983f34f-efbb-4d6c-9545-3c53d105d367" width="50%"/>
 </p>
+
+## Firmware and Code
+This macropad uses KMK Firmware, keyboard firmware written in CircuitPython. KMK is ideal for small custom keyboards and macropads due to its ease of use, real-time reprogrammability, and active development community.
+
+How to Implement:
+* Flash the CircuitPython .uf2 file for your board from [circuitpython.org](https://circuitpython.org/downloads)
+* Drag-and-drop the firmware onto the mounted USB drive (CIRCUITPY)
+* Install [KMK](https://github.com/KMKfw/kmk_firmware) by copying its files into the lib directory on the device
+* Add or edit the code.py file to define your keymap and macros
+* Example Code:
+```bash
+import board  # Access pin definitions specific to the microcontroller
+from kmk.kmk_keyboard import KMKKeyboard  # Base KMK keyboard class
+from kmk.keys import KC  # Keycode library for standard key constants
+from kmk.scanners.digitalio import DiodeOrientation  # Diode orientation options for the matrix
+
+# Create a keyboard object instance
+keyboard = KMKKeyboard()
+
+# Define the row and column GPIO pins based on your physical wiring
+keyboard.row_pins = (board.GP10, board.GP11, board.GP12)  # 3 row pins
+keyboard.col_pins = (board.GP6, board.GP7, board.GP8)     # 3 column pins
+
+# Specify the diode orientation used in the matrix (important for correct scanning)
+keyboard.diode_orientation = DiodeOrientation.COL2ROW
+
+# Define the keymap layout as a flat list of keycodes (3x3 matrix in this case)
+keyboard.keymap = [
+    [KC.KP_1, KC.KP_2, KC.KP_3,
+     KC.KP_4, KC.KP_5, KC.KP_6,
+     KC.KP_7, KC.KP_8, KC.KP_9]
+]
+
+# Run the keyboard firmware loop when the script is executed
+if __name__ == '__main__':
+    keyboard.go()
+
+```
+
+Feel free to modify the code to suit your own workflow!
